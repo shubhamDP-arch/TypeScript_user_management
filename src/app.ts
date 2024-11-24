@@ -46,9 +46,17 @@ class App{
   private initialiseDatabaseConnection(): void {
     const { MONGO_USER, MONGO_PASSWORD, MONGO_PATH } = process.env;
 
+    // mongoose.connect(
+    //     `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`
+    // );
     mongoose.connect(
-        `mongodb://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`
-    );
+      `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_PATH}?retryWrites=true&w=majority&appName=Cluster0`
+    ).then(
+      ()=>{
+        console.log("Connected DB")
+      }
+    )
+
 }
   public listen(): void{
     this.express.listen(this.port,  ()=>{
